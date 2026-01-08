@@ -2,7 +2,7 @@ import numpy as np
 from tensorflow import keras
 from tensorflow.keras import layers
 
-# XOR Data
+
 X = np.array([[0,0],[0,1],[1,0],[1,1]], dtype="float32")
 y = np.array([[0],[1],[1],[0]], dtype="float32")
 
