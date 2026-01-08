@@ -31,6 +31,33 @@ for epoch in range(epochs):
     grads = tape.gradient(loss, [W1, b1, W2, b2])
     for var, grad in zip([W1, b1, W2, b2], grads):
         var.assign_sub(learning_rate * grad)
+        
 
 print("Predictions:")
 print(forward(X).numpy())
+
+
+
+
+
+# Decision Boundary Plot
+
+xx, yy = np.meshgrid(np.linspace(-1,2,200), np.linspace(-1,2,200))
+grid = np.c_[xx.ravel(), yy.ravel()].astype("float32")
+
+pred = forward(grid).numpy()
+Z = pred.reshape(xx.shape)
+
+plt.contourf(xx, yy, Z, cmap="coolwarm", alpha=0.8)
+plt.scatter(X[:,0], X[:,1], c=y[:,0], cmap='coolwarm', edgecolors='k')
+plt.title("TensorFlow (Low-Level) XOR Decision Boundary")
+plt.show()
+
+
+# Training Loss Curve
+
+plt.plot(losses)
+plt.title("TensorFlow (Low-Level) Training Loss Curve")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.show()
