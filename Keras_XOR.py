@@ -16,6 +16,31 @@ model.compile(
     loss="binary_crossentropy"
 )
 
-model.fit(X, y, epochs=10000, verbose=0)
+history = model.fit(X, y, epochs=10000, verbose=0)
 
 print(model.predict(X))
+
+
+
+import matplotlib.pyplot as plt
+
+# Decision Boundary Plot
+
+xx, yy = np.meshgrid(np.linspace(-1,2,200), np.linspace(-1,2,200))
+grid = np.c_[xx.ravel(), yy.ravel()]
+pred = model.predict(grid)
+Z = pred.reshape(xx.shape)
+
+plt.contourf(xx, yy, Z, cmap="coolwarm", alpha=0.8)
+plt.scatter(X[:,0], X[:,1], c=y[:,0], cmap='coolwarm', edgecolors='k')
+plt.title("Keras XOR Decision Boundary")
+plt.show()
+
+
+# Training Loss Curve
+
+plt.plot(history.history['loss'])
+plt.title("Keras Training Loss Curve")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.show()
